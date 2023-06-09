@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "cds-modularity"
+version = "0.1.0"
+description = "a full-stack scalable framework for ML/Data Science projects at the UMass Center for Data Science"
+authors = ["Tanmay Agrawal <tanmayagrawa@umass.edu>"]
+license = "MIT License"
+readme = "README.md"
+packages = [{include = "cds_modularity"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+black = "^23.1.0"
+flake8 = "^6.0.0"
+isort = "^5.12.0"
+pre-commit = "^3.0.4"
+docker = "^6.0.1"
+docker-compose = "^1.29.2"
+pytest = "^7.2.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
