@@ -122,4 +122,55 @@ For example, DET_CFG can be changed to adopt a new detector.
    EXPERIMENT_NAME output directory. When we copy newly processed data to the server 
    that hosts the web UI, previous data won't need to be copied again.
 
+## Deploying locally
+Roost data can be accessed and visualized locally without slurm by making a few changes to your configurations. 
+
+### Generating the inference
+1. Within * insert local file *, set the following variables based on your dataset:
+    - `station`
+    - `start`
+    - `end`
+    - `sun_activity`
+    - `min_before`
+    - `min_after`
+2. Run the code, then open results in the <b>inference_results</b> folder. 
+### Changing paths to local
+1. Clone the [roostui](https://github.com/UMassCDS/roostui) repo to your system. 
+2. Copy the <b>inference_results</b> folder and paste it into the root of the roostui repo. 
+3. Make a new folder (<b>new_fldr</b>) within the <b>data</b> folder of the roostui repo. 
+4. Navigate to the <b>scans_and_tracks</b> folder within the roost-system repo. Copy the scans and tracks files. 
+5. Navigate to <b>new_fldr</b> within the roostui repo. Paste the scans and tracks files into your folder.
+6. In your command line, run the following commands:
+    ```bash 
+    cd roostui
+    cd data
+    bash init_dataset.sh new_fldr
+    ``` 
+7. Open the newly created config.json file in <b>new_fldr</b>. This contains the reflectivity (dz) and velocity (vr) paths. 
+8. Replace the doppler path with the following local path for reflectivity and velocity: inference_results/ui/img/. 
+    - For example: 
+        ``` bash
+        #old path:
+        "https://doppler.cs.umass.edu/roost/img/%s/dz05/%04d/%02d/%02d/%s/%s.png"
+        #new path:
+        "inference_results/ui/img/dz05/%04d/%02d/%02d/%s/%s.png"
+        ```
+9. Delete the "dataset" variable within "fields" for both "dz" and "vr."
+### Visualizing the inference
+1. Navigate to roostui/data/config.json. Open the config.json file.
+2. Add the <b>new_fldr</b> to the list of datasets.
+3. Run the following commands:
+    ```bash
+    cd roostui 
+    yarn run build 
+    yarn run serve
+    ```
+4. Open the outputted server link (it should have the local port number 8888). 
+5. Find <b>new_fldr</b> in the Dataset dropdown menu and enter your date and time. An inference appears in the UI. 
+
+
+
+
+
+
 
